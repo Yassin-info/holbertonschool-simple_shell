@@ -1,11 +1,11 @@
 #include "main.h"
 /**
- * _which - searches directories in PATH variable for command
- * @command: to search for
- * @fullpath: full path of command to execute
- * @path: full PATH variable
- * Return: pointer to full_path
- */
+* _which - searches directories in PATH variable for command
+* @command: to search for
+* @fullpath: full path of command to execute
+* @path: full PATH variable
+* Return: pointer to full_path
+*/
 char *_which(char *command, char *fullpath, char *path)
 {
 	unsigned int command_length, path_length, original_path_length;
