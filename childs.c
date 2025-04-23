@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
 * child - function for child process
 * @fullpath: full path of executable
