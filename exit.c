@@ -1,39 +1,28 @@
 #include "main.h"
 /**
-* handle_exit - Handles the exit functionality
-* @input: Input value to handle
-* @exit_status: Exit status of the code
+* _strdup - Creates a duplicate of a string in newly allocated memory
+* @str: The string to duplicate
+*
+* Return: Pointer to the duplicated string, or NULL on failure
 */
-void handle_exit(char *input, int exit_status)
+char *_strdup(char *str)
 {
-	if (input)
-		free(input);
-	exit(exit_status);
-}
+	int i;
+	char *copy_str;
 
-/**
-* shell_exit - Handles the exit status
-* @args: Arguments to the function
-* @input: Input to be freed before exit
-* Return: Should not return, exits the program
-*/
-int shell_exit(char **args, char *input)
-{
-    int exit_status = 0;
-    int i;
-    
-    if (args[1])
-    {
+	if (str == NULL)
+		return (NULL);
 
-        for (i = 0; args[1][i]; i++)
-        {
-            if (args[1][i] < '0' || args[1][i] > '9') 
-            {
-                return (1);
-            }
-        }
-        exit_status = _atoi(args[1]);
-    
-    handle_exit(input, exit_status);
-    return (exit_status);
+	for (i = 0; str[i] != '\0'; i++)
+		;
+
+	copy_str = malloc((i + 1) * sizeof(char));
+	if (copy_str == NULL)
+		return (NULL);
+
+	for (i = 0; str[i] != '\0'; i++)
+		copy_str[i] = str[i];
+
+	copy_str[i] = '\0';
+	return (copy_str);
 }

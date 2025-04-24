@@ -1,34 +1,105 @@
 #include "main.h"
 /**
-* concat_path - Concatenates directory and command
-* @dir: Directory path
-* @command: Command name
+* is_delim - Checks if a character is one of the delimiters
+* @c: The character to check
+* @delim: The string of delimiter characters
 *
-* Return: Full path or NULL on failure
+* Return: 1 if c is a delimiter, 0 otherwise
 */
-char *concat_path(char *dir, char *command)
+int is_delim(char c, const char *delim)
 {
-	int dir_len, cmd_len;
-	char *full_path;
-
-	if (!dir || !command)
-		return (NULL);
-
-	dir_len = _strlen(dir);
-	cmd_len = _strlen(command);
-
-	full_path = malloc(dir_len + cmd_len + 2);
-	if (!full_path)
-		return (NULL);
-
-	_strcpy(full_path, dir);
-	if (dir[dir_len - 1] != '/')
+	while (*delim != '\0')
 	{
-		full_path[dir_len] = '/';
-		dir_len++;
+		if (*delim == c)
+			return (1);
+		delim++;
 	}
-	_strcpy(full_path + dir_len, command);
-
-	return (full_path);
+	return (0);
 }
 
+/**
+* _strtok - Custom implementation of strtok to tokenize a string
+* @str: The input string to tokenize (only on first call)
+* @delim: The delimiter characters used to split the string
+*
+* Return: A pointer to the next token, or NULL if no more tokens
+*/
+char *_strtok(char *str, const char *delim)
+{
+	static char *current;
+	char *token;
+
+	if (str != NULL)
+	{
+		current = str;
+	}
+
+	while (*current != '\0' && is_delim(*current, delim))
+	{
+		current++;
+	}
+
+	if (*current == '\0')
+		return (NULL);
+
+	token = current;
+
+	while (*current != '\0' && !is_delim(*current, delim))
+		current++;
+
+	if (*current != '\0')
+	{
+		*current = '\0';
+		current++;
+	}
+
+	return (token);
+}
+
+/**
+* stock_args - Tokenizes a line into arguments
+*
+* @line: Pointer to the input line to split
+* Return: A pointer to the array of token strings (argv), or NULL on failure
+*/
+char **stock_args(char *line)
+{
+	int count = 0, i = 0;
+	char *cp_line = NULL, *cp_line2 = NULL, *token = NULL, **argv = NULL;
+
+	if (line == NULL)
+		return (NULL);
+	cp_line = _strdup(line);
+	if (cp_line == NULL)
+		return (NULL);
+	token = _strtok(cp_line, " ");
+	while (token != NULL)
+	{
+		count++;
+		token = _strtok(NULL, " "); }
+	free(cp_line);
+	argv = malloc(sizeof(char *) * (count + 1));
+	if (argv == NULL)
+		return (NULL);
+	cp_line2 = _strdup(line);
+	if (cp_line2 == NULL)
+	{
+		free(argv);
+		return (NULL); }
+	token = _strtok(cp_line2, " ");
+	while (token != NULL && i < count)
+	{
+		argv[i] = _strdup(token);
+		if (argv[i] == NULL)
+		{
+			while (--i >= 0)
+				free(argv[i]);
+			free(argv);
+			free(cp_line2);
+			return (NULL); }
+		i++;
+		token = _strtok(NULL, " "); }
+	argv[i] = NULL;
+	free(cp_line2);
+	return (argv);
+}

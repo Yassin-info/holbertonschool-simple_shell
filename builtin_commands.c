@@ -1,31 +1,107 @@
 #include "main.h"
 /**
-* handle_builtin_commands - Handle all the built in commands
-* @args: Arguments to the built in commands
-* @num_args: Number of arguments
-* @input: The input command
-* @env: The environment variables
-*
-* Return: 1 if builtin command was executed, 0 otherwise
+* _is_number - Check if a string is a valid integer number
+* @str: String to check
+* Return: 1 if numeric, 0 otherwise
 */
-int handle_builtin_commands(char **args, int num_args, char *input, char **env)
+int _is_number(char *str)
 {
-	if (!args || !args[0])
+	int i = 0;
+	if (!str)
+		return (0);
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	for (; str[i]; i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+	}
+	return (1);
+}
+
+/**
+* builtin_exit - Handle the "exit" builtin command
+* @argv: Array of command arguments
+* @env: Array of environment variables
+*
+* Return: -1 to indicate shell termination
+*/
+int builtin_exit(char **argv, char **env, char *line, int last_status)
+{
+	int exit_status = last_status;
+
+	(void)env;
+
+	if (argv[1])
+	{
+		if (_is_number(argv[1]))
+			exit_status = atoi(argv[1]);
+
+		else
+		{
+			fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", argv[1]);
+			free_argv(argv);
+			free(line);
+			exit(2);
+		}
+	}
+
+	free_argv(argv);
+	free(line);
+	exit(exit_status);
+}
+
+/**
+* builtin_env - Handle the "env" builtin command
+* @argv: Array of command arguments
+* @env: Array of environment variables
+* Return: 1 to indicate the command was handled
+*/
+int builtin_env(char **argv, char **env, char *line, int last_status)
+{
+	int i;
+
+	(void)line;
+	(void)last_status;
+
+	if (argv[1])
 		return (0);
 
-	if (strcmp(args[0], "exit") == 0)
-	{
-		return (shell_exit(args, input));
-	}
-	else if (strcmp(args[0], "cd") == 0)
-	{
-		handle_cd(args, num_args, env);
+	if (!env)
 		return (1);
-	}
-	else if (strcmp(args[0], "env") == 0)
+
+	for (i = 0; env[i]; i++)
+		printf("%s\n", env[i]);
+
+	return (0);
+}
+
+/**
+* handle_builtin - Check and execute builtin shell commands
+* @argv: Array of command arguments
+* @env: Array of environment variables
+* Return: -1 if "exit", 1 if a builtin was handled, 0 otherwise
+*/
+int handle_builtin(char **argv, char **env, char *line, int last_status)
+{
+	int i, ret;
+
+	builtin_t builtins[] = {
+		{"exit", builtin_exit},
+		{"env", builtin_env},
+		{NULL, NULL}
+	};
+
+	if (!argv || !argv[0])
+		return (0);
+
+	for (i = 0; builtins[i].name; i++)
 	{
-		print_env(env);
-		return (1);
+		if (strcmp(argv[0], builtins[i].name) == 0)
+		{
+			ret = builtins[i].func(argv, env, line, last_status);
+			return (ret);
+		}
 	}
 
 	return (0);

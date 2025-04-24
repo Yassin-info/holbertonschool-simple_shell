@@ -1,43 +1,55 @@
 #include "main.h"
+
 /**
-* read_input - Reads and processes input from standard input
-* Description: Reads a line of input, handles empty lines and whitespace.
-* Performs proper memory management and error checking.
+ * _getline - Reads a line from a file descriptor (stdin by default)
+* character by character and stores it into a dynamically
+* allocated buffer, reallocating if necessary.
+* @lineptr: Pointer to the buffer that will contain the line
+* @n: Pointer to the size of the buffer
+* @fd: File descriptor to read from (e.g., 0 for stdin)
 *
-* Return: Pointer to input string, or NULL if EOF
+* Return: Number of characters read (excluding null byte),
+*         -1 on failure or EOF with no characters read.
 */
-char *read_input(void)
+ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
-	char *input_buffer = NULL;
-	size_t buf_size = 0;
-	ssize_t nread;
-	int i, only_spaces = 1;
+	size_t i = 0, new_size;
+	char *temp, c;
+	ssize_t r;
 
-	nread = getline(&input_buffer, &buf_size, stdin);
-
-	if (nread == -1)
+	if (lineptr == NULL || n == NULL)
+		return (-1);
+	if (*lineptr == NULL || *n == 0)
 	{
-		free(input_buffer);
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "\n", 1);
-		return (NULL);
+		*n = 128;
+		*lineptr = malloc(*n);
+		if (*lineptr == NULL)
+			return (-1);
 	}
-	if (nread > 0 && input_buffer[nread - 1] == '\n')
-		input_buffer[nread - 1] = '\0';
-
-	for (i = 0; input_buffer[i] != '\0'; i++)
+	while (1)
 	{
-		if (input_buffer[i] != ' ' && input_buffer[i] != '\t')
+		r = read(fd, &c, 1);
+		if (r < 0)
+			return (-1);
+		if (r == 0)
 		{
-			only_spaces = 0;
-			break;
+			return (i > 0 ? (ssize_t)i : -1);
 		}
+		if (i >= (*n - 1))
+		{
+			new_size = ((*n) * 2);
+			temp = malloc(new_size);
+			if (temp == NULL)
+				return (-1);
+			_memcpy(temp, *lineptr, *n);
+			free(*lineptr);
+			*lineptr = temp;
+			*n = new_size;
+		}
+		(*lineptr)[i++] = c;
+		if (c == '\n')
+			break;
 	}
-	if (only_spaces)
-	{
-		input_buffer[0] = '\0';
-		return (input_buffer);
-	}
-
-	return (input_buffer);
+	(*lineptr)[i] = '\0';
+	return (i);
 }
