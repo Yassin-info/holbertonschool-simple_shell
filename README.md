@@ -1,7 +1,7 @@
 ![image](https://github.com/user-attachments/assets/69545c5a-75f6-4336-8d92-4497cfc3335e)
 # Simple Shell Project
 
-##📝 Description
+## 📝Description
 
 This project is a simple UNIX command line interpreter implemented in C. It aims to replicate basic functionalities of the sh shell, providing a hands-on understanding of how shells work, process creation, and command execution in Unix-like operating systems.
 
