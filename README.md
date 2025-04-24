@@ -58,7 +58,7 @@ hsh main.c shell.c
 #cisfun$ exit
 ```
 
-###📡 Non-Interactive Mode
+## 📡Non-Interactive Mode
 
 ```bash
 echo "/bin/ls" | ./hsh
