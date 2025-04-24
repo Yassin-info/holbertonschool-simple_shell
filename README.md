@@ -49,7 +49,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
 ## 🚀Usage
 
-### 🧑‍💻Interactive Mode
+##  🧑‍💻Interactive Mode
 
 ```bash
 ./hsh
