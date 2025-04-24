@@ -1,7 +1,6 @@
 #include "main.h"
 /**
-* read_input - Reads and processes input from standard input 
-*
+* read_input - Reads and processes input from standard input
 * Description: Reads a line of input, handles empty lines and whitespace.
 * Performs proper memory management and error checking.
 *

@@ -22,9 +22,11 @@ int shell_exit(char **args, char *input)
     int exit_status = 0;
     int i;
     
-    if (args[1]) {
+    if (args[1])
+    {
 
-        for (i = 0; args[1][i]; i++) {
+        for (i = 0; args[1][i]; i++)
+        {
             if (args[1][i] < '0' || args[1][i] > '9') 
             {
                 return (1);
