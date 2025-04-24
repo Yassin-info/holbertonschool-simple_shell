@@ -17,7 +17,6 @@ This project is a simple UNIX command line interpreter implemented in C. It aims
 9.📚 [Resources](#resources)
 10. ✅[List of Allowed Functions](#list-of-allowed-functions)
 11.👥 [Authors](#authors)
-12.🛡️ [License](#license)
 
 ## 🌟Features
 
@@ -155,7 +154,3 @@ access, chdir, close, closedir, execve, exit, _exit, fflush, fork, free, getcwd,
 ## 👥Authors
 Zaccaria Azladji (https://github.com/zoulouhh)
 Yassin Jaghmim (https://github.com/yassin-info)
-
-## 🛡️License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
