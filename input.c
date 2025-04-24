@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _getline - Reads a line from a file descriptor (stdin by default)
+* _getline - Reads a line from a file descriptor (stdin by default)
 * character by character and stores it into a dynamically
 * allocated buffer, reallocating if necessary.
 * @lineptr: Pointer to the buffer that will contain the line
