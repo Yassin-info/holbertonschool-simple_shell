@@ -1,0 +1,70 @@
+.TH HSH 1 "April 2025" "Version 1.0" "Simple Shell Manual"
+
+.SH NAME
+hsh \- a simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B hsh
+[\fIfile\fR]
+
+.SH DESCRIPTION
+.B hsh
+is a minimalist UNIX command line interpreter written in C, designed to mimic the basic functionality of the \fIsh\fR shell.
+
+It supports basic command execution, argument parsing, and several built-in commands. It reads commands from the standard input in interactive mode or from a file in non-interactive mode.
+
+.SH USAGE MODES
+
+.TP
+\fBInteractive Mode\fR
+The shell displays a prompt (\fB$\fR) and waits for the user to enter a command.
+
+.TP
+\fBNon-Interactive Mode\fR
+Commands are read from a script or piped into the shell from standard input.
+
+.SH BUILT-IN COMMANDS
+
+.TP
+\fBexit\fR
+Exit the shell.
+
+.TP
+\fBenv\fR
+Print the current environment variables.
+
+.TP
+\fBsetenv\fR \fIVAR VALUE\fR
+Set or update an environment variable.
+
+.TP
+\fBunsetenv\fR \fIVAR\fR
+Remove an environment variable.
+
+.SH FILES
+\fI./hsh\fR — the shell executable
+
+.SH RETURN VALUE
+Returns 0 on successful execution, or an appropriate error code depending on the command.
+
+.SH ENVIRONMENT
+.B hsh
+uses the \fBPATH\fR environment variable to locate executable commands.
+
+.SH REQUIREMENTS
+- Ubuntu 20.04 LTS  
+- GCC with flags: \fB-Wall -Werror -Wextra -pedantic -std=gnu89\fR  
+- Adheres to Betty coding style  
+- No more than 5 functions per file  
+
+.SH AUTHORS
+AZLADJI Zaccaria  
+Yassin Jaghmim
+
+.SH SEE ALSO
+.BR sh(1),
+.BR bash(1),
+.BR execve(2),
+.BR fork(2),
+.BR getenv(3)
+
