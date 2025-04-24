@@ -63,6 +63,49 @@ hsh main.c shell.c
 ```bash
 echo "/bin/ls" | ./hsh
 ```
+## 📋Installation Guide
+
+### 1. Clone the Repository
+
+```bash
+   git clone https://github.com/AnneCecile2935/holbertonschool-simple_shell.git
+   cd holbertonschool-simple_shell
+```
+
+---
+
+#### 2. Prepare the Installation Script
+
+```bash
+chmod +x install_man_page.sh
+```
+
+#### 3. Run the Installation Script
+
+```bash
+sudo ./install_man_page.sh
+```
+
+#### Verifying Installation
+
+```bash
+man myshell
+```
+
+### Troubleshooting
+
+- Ensure necessary permissions
+- Verify script location
+- Check `mandb` installation
+
+### Uninstallation
+
+```bash
+sudo rm /usr/local/share/man/man1/myshell.1.gz
+sudo mandb
+```
+
+
 
 ## 🔧Built-in Commands
 
