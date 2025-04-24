@@ -9,7 +9,7 @@ int is_interactive(void)
 }
 /**
 * get_input_line - Reads a line from standard input
-* @line: Address of the pointer where the line will be stored
+* @line: Address of the pointer where the line will be stored 
 * @len: Size allocated for the line (managed by getline)
 * Return: Number of characters read, or -1 on error or EOF
 */

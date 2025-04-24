@@ -23,7 +23,6 @@ int _is_number(char *str)
 * builtin_exit - Handle the "exit" builtin command
 * @argv: Array of command arguments
 * @env: Array of environment variables
-*
 * Return: -1 to indicate shell termination
 */
 int builtin_exit(char **argv, char **env, char *line, int last_status)
