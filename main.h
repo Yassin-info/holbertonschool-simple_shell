@@ -2,49 +2,61 @@
 #define MAIN_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <string.h>
+
+#define BUFFER 1024
+#define TRUE 1
+#define PROMPT "#cisfun$ "
+#define ERR_MALLOC "Unable to malloc space\n"
+#define ERR_FORK "Unable to fork and create child process\n"
+#define ERR_PATH "No such file or directory\n"
+extern char **environ;
 
 /**
-* struct builtin_s - Structure to map builtin command names to functions
-* @name: Name of the builtin command
-* @func: Function to execute the builtin
+* struct list_s - linked list of variables
+* @value: value
+* @next: pointer to next node
+* Description: generic linked list struct for variables.
 */
-typedef struct builtin_s
+typedef struct list_s
+{
+	char *value;
+	struct list_s *next;
+} list_s;
+
+/**
+* struct built_s - linked list of builtins
+* @name: name of builtin
+* @p: pointer to function
+* Description: struct for builtin functions.
+*/
+typedef struct built_s
 {
 	char *name;
-	int (*func)(char **argv, char **env, char *line, int last_status);
-} builtin_t;
+	int (*p)(void);
+} built_s;
 
-ssize_t _getline(char **lineptr, size_t *n, int fd);
-char *_strtok(char *str, const char *delim);
-pid_t fork(void);
-pid_t wait(int *status);
-char *_memcpy(char *dest, char *src, unsigned int n);
+void prompt(int fd, struct stat buf);
+char *_getline(FILE *fp);
+char **tokenizer(char *str);
+char *_which(char *command, char *fullpath, char *path);
+int child(char *fullpath, char **tokens);
+void errors(int error);
+void _puts(char *str);
+int _strlen(char *s);
+int _strcmp(char *name, char *variable, unsigned int length);
+int _strncmp(char *name, char *variable, unsigned int length);
 char *_strcpy(char *dest, char *src);
-char **stock_args(char *line);
-int is_delim(char c, const char *delim);
-char *_strdup(char *str);
-int main(int ac, char **av, char **env);
-int execute(char **argv, char **env);
-char *_which(char *filename, char **env);
-int _check_direct_path(char *filename);
-char *_extract_path(char **env);
-char *_search_in_path(char *path_str, char *filename);
-int _strncmp(const char *s1, const char *s2, size_t n);
-int handle_builtin(char **argv, char **env, char *line, int last_status);
-void free_argv(char **argv);
-int is_interactive(void);
-ssize_t get_input_line(char **line, size_t *len);
-int shell_loop(char **env, char *progname, int *exit_status);
-int handle_builtin_or_execute(char **argv, char **env, char *progname,
-	char *line, int *exit_status);
-int _is_number(char *str);
-int builtin_exit(char **argv, char **env, char *line, int last_status);
-int builtin_env(char **argv, char **env, char *line, int last_status);
+int shell_env(void);
+int shell_exit(void);
+int builtin_execute(char **tokens);
+int shell_num_builtins(built_s builtin[]);
+char *_getenv(const char *name);
+void free_all(char **tokens, char *path, char *line, char *fullpath, int flag);
 
 #endif
