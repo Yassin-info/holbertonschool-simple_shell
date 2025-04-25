@@ -139,7 +139,7 @@ sudo mandb
 
 ## Flowchart
 
-
+![image](https://github.com/user-attachments/assets/8f29d011-e4d7-43d9-ac24-5fafc0492dad)
 
 
 ## 📚Resources
