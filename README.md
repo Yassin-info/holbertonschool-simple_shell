@@ -67,7 +67,7 @@ echo "/bin/ls" | ./hsh
 ### 1. Clone the Repository
 
 ```bash
-   git clone https://github.com/AnneCecile2935/holbertonschool-simple_shell.git
+   git clone https://github.com/Yassin-info/holbertonschool-simple_shell.git
    cd holbertonschool-simple_shell
 ```
 
